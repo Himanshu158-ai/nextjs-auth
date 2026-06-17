@@ -1,12 +1,31 @@
+"use client"
 
-
-import React from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link';
 
-const Register = async () => {
-  const res = await fetch("http://localhost:3000/api/register");
-  const data = await res.json();
-  console.log(data);
+const Register = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  async function register(e) {
+    e.preventDefault();
+
+    const res = await fetch("/api/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: name,
+        email: email,
+        password: password,
+      }),
+    });
+
+    const data = await res.json();
+    console.log(data);
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
@@ -31,6 +50,10 @@ const Register = async () => {
               Full Name
             </label>
             <input
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
+              value={name}
               type="text"
               placeholder="Enter your full name"
               className="w-full text-gray-700 border border-gray-300 rounded-lg px-4 py-3 outline-none focus:ring-2 focus:ring-black focus:border-transparent transition"
@@ -43,6 +66,10 @@ const Register = async () => {
               Email
             </label>
             <input
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+              value={email}
               type="email"
               placeholder="Enter your email"
               className="w-full text-gray-700 border border-gray-300 rounded-lg px-4 py-3 outline-none focus:ring-2 focus:ring-black focus:border-transparent transition"
@@ -55,6 +82,10 @@ const Register = async () => {
               Password
             </label>
             <input
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+              value={password}
               type="password"
               placeholder="Create a password"
               className="w-full text-gray-700 border border-gray-300 rounded-lg px-4 py-3 outline-none focus:ring-2 focus:ring-black focus:border-transparent transition"
@@ -63,7 +94,7 @@ const Register = async () => {
 
           {/* Terms */}
           <label className="flex items-start gap-2 text-sm text-gray-600 cursor-pointer">
-            <input type="checkbox" className="mt-1" />
+            <input type="checkbox" className="mt-1" required />
             <span>
               I agree to the{" "}
               <span className="font-medium text-black hover:underline">
@@ -80,6 +111,9 @@ const Register = async () => {
           <button
             type="submit"
             className="w-full bg-black text-white py-3 rounded-lg font-medium hover:opacity-90 transition"
+            onClick={(e) => {
+              register(e);
+            }}
           >
             Create Account
           </button>
