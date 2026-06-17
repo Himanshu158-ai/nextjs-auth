@@ -1,9 +1,15 @@
+
+
 import React from 'react'
 import Link from 'next/link';
 
-const Register = () => {
+const Register = async () => {
+  const res = await fetch("http://localhost:3000/api/register");
+  const data = await res.json();
+  console.log(data);
+
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+    <div className="min-h-screen flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
 
         {/* Heading */}
