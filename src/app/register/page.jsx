@@ -2,11 +2,13 @@
 
 import React, { useState } from 'react'
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const Register = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const router = useRouter();
 
   async function register(e) {
     e.preventDefault();
@@ -24,7 +26,13 @@ const Register = () => {
         }),
       });
       const data = await res.json();
-      console.log(data.message);
+      if (data.status === 200) {
+        localStorage.setItem("name", data.user.name);
+        router.push("/");
+      }
+      else {
+        alert(data.message);
+      }
     } catch (error) {
       console.log(error.message);
     }

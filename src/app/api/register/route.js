@@ -44,7 +44,7 @@ export async function POST(request) {
     const response = NextResponse.json({
       message: "User Register Successfully",
       user,
-      status: 201,
+      status: 200,
     });
 
     response.cookies.set("token", token, {
