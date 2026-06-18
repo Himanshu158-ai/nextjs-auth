@@ -8,8 +8,6 @@ export async function POST(request) {
   try {
     const body = await request.json();
 
-    console.log(body);
-
     const { name, email, password } = body;
 
     await connectDb();
@@ -19,6 +17,7 @@ export async function POST(request) {
     if (isUserExist) {
       return NextResponse.json({
         message: "User already exists",
+        status: 400
       });
     }
 
