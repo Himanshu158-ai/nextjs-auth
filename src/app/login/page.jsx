@@ -27,7 +27,11 @@ const Login = () => {
       })
       const data = await res.json();
       if (data.status === 200) {
+        localStorage.setItem("name", data.user.name);
         router.push("/");
+      }
+      else {
+        alert(data.message);
       }
     } catch (error) {
       console.log(error.message);
