@@ -39,7 +39,7 @@ export async function POST(request) {
         const response = NextResponse.json({
             message: "User success fully login",
             user,
-            status: 201
+            status: 200
         })
 
 
