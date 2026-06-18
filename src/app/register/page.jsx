@@ -26,7 +26,7 @@ const Register = () => {
         }),
       });
       const data = await res.json();
-      if (data.status === 200) {
+      if (data.status === 201) {
         localStorage.setItem("name", data.user.name);
         router.push("/");
       }
