@@ -9,6 +9,12 @@ export async function POST(request) {
     const body = await request.json();
 
     const { name, email, password } = body;
+    if (!name || !email || !password) {
+      return NextResponse.json({
+        message: "Please fill all the fields",
+        status: 400
+      });
+    }
 
     await connectDb();
 
@@ -38,7 +44,7 @@ export async function POST(request) {
     const response = NextResponse.json({
       message: "User Register Successfully",
       user,
-      status: 200,
+      status: 201,
     });
 
     response.cookies.set("token", token, {

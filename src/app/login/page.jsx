@@ -1,7 +1,39 @@
-import React from 'react'
+"use client"
+import { useState } from 'react'
 import Link from 'next/link';
+import { useRouter } from "next/navigation";
+
+
 
 const Login = () => {
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const router = useRouter();
+
+  async function login(e) {
+    e.preventDefault();
+
+    try {
+      const res = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+        }),
+      })
+      const data = await res.json();
+      if (data.status === 200) {
+        router.push("/");
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
@@ -24,6 +56,10 @@ const Login = () => {
               Email
             </label>
             <input
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+              value={email}
               type="email"
               placeholder="Enter your email"
               className="w-full text-gray-700 border border-gray-300 rounded-lg px-4 py-3 outline-none focus:ring-2 focus:ring-black focus:border-transparent transition"
@@ -36,14 +72,21 @@ const Login = () => {
               Password
             </label>
             <input
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+              value={password}
               type="password"
               placeholder="Enter your password"
               className="w-full text-gray-700 border border-gray-300 rounded-lg px-4 py-3 outline-none focus:ring-2 focus:ring-black focus:border-transparent transition"
             />
           </div>
-          
+
           {/* Login Button */}
           <button
+            onClick={(e) => {
+              login(e);
+            }}
             type="submit"
             className="w-full bg-black text-white py-3 rounded-lg font-medium hover:opacity-90 transition"
           >

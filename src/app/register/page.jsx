@@ -11,20 +11,23 @@ const Register = () => {
   async function register(e) {
     e.preventDefault();
 
-    const res = await fetch("/api/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: name,
-        email: email,
-        password: password,
-      }),
-    });
-
-    const data = await res.json();
-    console.log(data);
+    try {
+      const res = await fetch("/api/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: name,
+          email: email,
+          password: password,
+        }),
+      });
+      const data = await res.json();
+      console.log(data.message);
+    } catch (error) {
+      console.log(error.message);
+    }
   }
 
   return (
